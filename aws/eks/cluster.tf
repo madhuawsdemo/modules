@@ -87,6 +87,16 @@ resource "aws_security_group_rule" "cluster_https_worker_ingress" {
   type                     = "ingress"
 }
 
+resource "aws_security_group_rule" "cluster_dns_worker_ingress" {
+  count                    = var.cluster_create_security_group && var.create_eks ? 1 : 0
+  description              = "Allow pods to communicate with the Core DNS"
+  protocol                 = "udp"
+  security_group_id        = local.cluster_security_group_id
+  source_security_group_id = local.worker_security_group_id
+  to_port                  = 53
+  type                     = "ingress"
+}
+
 resource "aws_security_group_rule" "cluster_private_access_cidrs_source" {
   count       = var.create_eks && var.cluster_create_endpoint_private_access_sg_rule && var.cluster_endpoint_private_access && var.cluster_endpoint_private_access_cidrs != null ? 1 : 0
   description = "Allow private K8S API ingress from custom CIDR source."
