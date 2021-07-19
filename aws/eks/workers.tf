@@ -426,27 +426,17 @@ resource "aws_security_group_rule" "workers_ingress_cluster_https" {
   type                     = "ingress"
 }
       
-resource "aws_security_group_rule" "workers_ingress_cluster_udp_dns" {
+resource "aws_security_group_rule" "all_ingress_cluster_udp_dns" {
   count                    = var.worker_create_security_group && var.create_eks ? 1 : 0
   description              = "Allow pods to communicate with the Core DNS on udp port"
-  protocol                 = "tcp"
+  protocol                 = "udp"
   security_group_id        = local.worker_security_group_id
-  source_security_group_id = local.cluster_security_group_id
+  cidr_blocks              = ["0.0.0.0/0"]
   from_port                = 53
   to_port                  = 53
   type                     = "ingress"
 }
 
-resource "aws_security_group_rule" "workers_ingress_cluster_tcp_dns" {
-  count                    = var.worker_create_security_group && var.create_eks ? 1 : 0
-  description              = "Allow pods to communicate with the Core DNS on tcp port"
-  protocol                 = "udp"
-  security_group_id        = local.worker_security_group_id
-  source_security_group_id = local.cluster_security_group_id
-  from_port                = 53
-  to_port                  = 53
-  type                     = "ingress"
-}
 
 resource "aws_security_group_rule" "workers_ingress_cluster_primary" {
   count                    = var.worker_create_security_group && var.worker_create_cluster_primary_security_group_rules && var.cluster_version >= 1.14 && var.create_eks ? 1 : 0
