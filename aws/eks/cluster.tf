@@ -106,7 +106,7 @@ resource "aws_security_group_rule" "cluster_udp_dns_all_ingress" {
   description              = "Allow pods to communicate with the Core DNS on tcp port"
   protocol                 = "udp"
   security_group_id        = local.cluster_security_group_id
-  cidr_blocks              = "0.0.0.0/0"
+  cidr_blocks              = var.subnets
   from_port                = 53
   to_port                  = 53
   type                     = "ingress"
