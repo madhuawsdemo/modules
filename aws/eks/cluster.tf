@@ -101,7 +101,7 @@ resource "aws_security_group_rule" "cluster_udp_dns_worker_ingress" {
 
 #THIS RULE NEED TO BE FIXED
 
-resource "aws_security_group_rule" "cluster_udp_dns_all" {
+resource "aws_security_group_rule" "cluster_udp_dns_all_ingress" {
   count                    = var.cluster_create_security_group && var.create_eks ? 1 : 0
   description              = "Allow pods to communicate with the Core DNS on tcp port"
   protocol                 = "udp"
