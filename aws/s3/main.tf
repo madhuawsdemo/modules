@@ -1,7 +1,7 @@
 locals {
   attach_policy = var.attach_elb_log_delivery_policy || var.attach_lb_log_delivery_policy || var.attach_deny_insecure_transport_policy || var.attach_policy
 }
-
+#todo
 resource "aws_s3_bucket" "this" {
   count = var.create_bucket ? 1 : 0
 

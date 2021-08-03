@@ -16,6 +16,7 @@ module "fargate" {
   # Do not create node_groups before other resources are ready and removes race conditions
   # Ensure these resources are created before "unlocking" the data source.
   # Will be removed in Terraform 0.13
+  #todo in new terraform
   eks_depends_on = [
     aws_eks_cluster.this,
     kubernetes_config_map.aws_auth,

@@ -5,7 +5,7 @@ resource "aws_cloudwatch_log_group" "this" {
   kms_key_id        = var.cluster_log_kms_key_id
   tags              = var.tags
 }
-
+#eks_cluster
 resource "aws_eks_cluster" "this" {
   count                     = var.create_eks ? 1 : 0
   name                      = var.cluster_name
